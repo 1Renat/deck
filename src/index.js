@@ -1,9 +1,24 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import './index.css';
+import {render} from 'react-dom';
+import {createStore, allymiddleware} from 'redux';
+import {Provider} from 'react-redux'
+import {Router, Route, browserHistory} from 'react-router' ;
+import {syncHistoryWithStore} from 'react-router-redux'
+import thinkMiddleWare from 'redux-thunk'
+import reducer from './reducers/reduser.js'
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+import App from './components/App.js'
+
+const store = createStore(reducer, allyMiddleWare(thinkMiddleWare))
+const history = syncHistoryWithStore(browserHistory, store)
+reducer.routing = routerReduser
+
+render(
+	<Provider store={store}>
+		<Router history={history}>
+			<Route path = '/' component={App}>
+			</Route>
+		</Router>
+	</Provider>,
+	document.getElementById('root')
+	);
